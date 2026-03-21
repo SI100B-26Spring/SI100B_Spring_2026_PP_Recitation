@@ -412,13 +412,13 @@ Windows 系统：
 
 <div style=" margin-top: 10px; margin-right: 20px; margin-left: 20px" markdown="1">
 
-| 功能             | 语法示例                 | 说明                                                                 |
-| ---------------- | ------------------------ | -------------------------------------------------------------------- |
-| 强制包含关键词   | `"Python tutorial"`      | 使用半角双引号，结果须完全包含引号内的词组                           |
-| 强制排除关键词   | `Python -Java`           | 在词组前加减号，结果中不会出现被排除的词                             |
-| 模糊匹配         | `Python * tutorial`      | 星号 `*` 可匹配任意单词，如可能给出 `Python science tutorial` 的结果 |
-| 限制搜索网站     | `site:python.org Python` | 只在指定网站中搜索                                                   |
-| 限制搜索文件类型 | `filetype:pdf Python`    | 只搜索特定文件类型（如 PDF）                                         |
+| 功能 | 语法示例 | 说明  |
+|------------|--------|--------|
+| 强制包含关键词 | `"Python tutorial"` | 使用半角双引号，结果须完全包含引号内的词组 |
+| 强制排除关键词 | `Python -Java` | 在词组前加减号，结果中不会出现被排除的词 |
+| 模糊匹配 | `Python * tutorial` | 星号 `*` 可匹配任意单词，如可能给出 `Python science tutorial` 的结果|
+| 限制搜索网站 | `site:python.org Python` | 只在指定网站中搜索 |
+| 限制搜索文件类型 | `filetype:pdf Python` | 只搜索特定文件类型（如 PDF） |
 
 也可以使用浏览器插件实现相关功能。
 
