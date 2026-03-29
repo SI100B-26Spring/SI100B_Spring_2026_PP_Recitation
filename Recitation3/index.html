@@ -1526,7 +1526,7 @@ Big O 告诉我们增长趋势，但不表示一切。
     // options from URL query string
     var queryOptions = Reveal().getQueryHash() || {};
 
-    var options = extend(defaultOptions, {"_":["./materials/Recitation3/Recitation3.md"],"static":"static/Recitation3","template":"./assets/reveal.html","preprocessor":"./assets/preproc.js","scripts":"assets/menu/menu.js,assets/inject.js"}, queryOptions);
+    var options = extend(defaultOptions, {"math":{"mathjax":"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"},"_":["./materials/Recitation3/Recitation3.md"],"static":"static/Recitation3","template":"./assets/reveal.html","preprocessor":"./assets/preproc.js","scripts":"assets/menu/menu.js,assets/inject.js"}, queryOptions);
   </script>
 
   <script src="./_assets/assets/menu/menu.js"></script>
