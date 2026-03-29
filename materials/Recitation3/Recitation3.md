@@ -4,6 +4,9 @@ separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
 highlightTheme: github
+revealOptions:
+  math:
+    mathjax: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 css: assets/custom.css
 autoTitlePage: true
 makeTitle:
