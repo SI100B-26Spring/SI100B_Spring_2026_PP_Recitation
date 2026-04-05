@@ -185,14 +185,14 @@ hello_list[0] = 5  # 现在变成了 [5, 2, 3]
   * 使用 `join` 方法：`'-'.join(['a', 'b', 'c'])` 得到 `"a-b-c"`
 ```python
 s = "I <3 cs"
-L = s.split(' ') # 以' '作为分隔符
-print(L)  # 输出: ['I', '<3', 'cs']
+L = s.split(' ')                       # 以' '作为分隔符
+print(L)                               # 输出: ['I', '<3', 'cs']
 
 L_chars = list("abc")
-print(L_chars)  # 输出: ['a', 'b', 'c']
+print(L_chars)                         # 输出: ['a', 'b', 'c']
 
 joined_str = '-'.join(['a', 'b', 'c']) # 以'-'作为连接符
-print(joined_str)  # 输出: a-b-c
+print(joined_str)                      # 输出: a-b-c
 ```
 <!--v-->
 
@@ -276,15 +276,15 @@ L = [1, 2, 3, 4]
 for e in L:
     L.append(0) 
     print("这将导致无限循环，因为 L 不断增长，迭代不会结束")
-
+```
+由于循环直接跟随着列表元素的增加，它永远也达不到终点，造成死循环！
+```python
 # range 循环 (安全)
 L_range = [1, 2, 3, 4]
 for i in range(len(L_range)):
     L_range.append(i)
 print("range循环结果:", L_range)
 ```
-由于循环直接跟随着列表元素的增加，它永远也达不到终点，造成死循环！
-
 <!--s-->
 
 <div class="middle center"><div style="width: 100%">
@@ -344,7 +344,7 @@ for sublist in b:
     print(sublist)  # 每个子列表都是 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 print('\nAfter modification a[0]:')
-a[0] = 0    # 这将修改a的第一个元素。
+a[0] = 0            # 这将修改a的第一个元素。
 for sublist in b:
     print(sublist)  # 每个子列表现在都是 [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ```
@@ -379,6 +379,9 @@ print(id(Lnew))       # 输出一个新的地址，如 140123456789500
 用 `L[:]` 或 `copy.copy(L)` 创建的都是**浅拷贝**。
 * 它会创建一个新的顶层结构。
 * 但是，列表里面包含的可变对象（如嵌套列表）仍然是共享的（别名）。
+
+<!--v-->
+## 浅拷贝 (Shallow Copy) 示例
 ```python
 a = [2, 3]
 L = [1, a]
