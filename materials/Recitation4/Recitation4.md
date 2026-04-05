@@ -80,7 +80,7 @@ makeThanks: true
 
 🚨 **注意：** 尝试修改元组元素（如 `hello_tuple[1] = 4`）会引发 `TypeError`！
 ```python
-# 示例不可改变
+# 示例tuple不可改变
 hello_tuple = (2, "stu", 3)
 hello_tuple[1] = 4 
 # TypeError: 'tuple' object does not support item assignment
@@ -159,7 +159,7 @@ print(joined_str)  # 输出: a-b-c
 ```
 <!--v-->
 
-# 3、可变性与"Side Effects(副作用?)"
+## 3、可变性与"Side Effects(副作用?)"
 
 一些方法会直接修改列表本身，而不会返回一个新列表，而是返回 `None`。我们称其为利用**Side Effects**。
 
@@ -330,25 +330,20 @@ print(id(Lnew))       # 输出一个新的地址，如 140123456789500
 用 `L[:]` 或 `copy.copy(L)` 创建的都是**浅拷贝**。
 * 它会创建一个新的顶层结构。
 * 但是，列表里面包含的可变对象（如嵌套列表）仍然是共享的（别名）。
-
-<!--v-->
-
-## 浅拷贝 (Shallow Copy) 示例
-
 ```python
 a = [2, 3]
 L = [1, a]
 L_shallow = L[:]
 print("Initial state:")
-print("L:", L)             # 输出 [1, [2, 3]]
+print("L:", L) # 输出 [1, [2, 3]]
 print("L_shallow:", L_shallow) # 输出 [1, [2, 3]]
 print("\nChange L[0] = 99:")
 L[0] = 99
-print("L:", L)             # 输出 [99, [2, 3]]
+print("L:", L) # 输出 [99, [2, 3]]
 print("L_shallow:", L_shallow) # 输出 [1, [2, 3]], L_shallow[0] 没有变
 print("\nChange a[0] = 88:")
 a[0] = 88
-print("L:", L)             # 输出 [99, [88, 3]], L 中的 a 被修改了
+print("L:", L) # 输出 [99, [88, 3]], L 中的 a 被修改了
 print("L_shallow:", L_shallow) 
 # 输出 [1, [88, 3]], L_shallow 中的 a 也被修改了！
 ```
@@ -361,22 +356,17 @@ print("L_shallow:", L_shallow)
 * 它会在**所有层级**上递归地克隆数据结构。
 * 修改深拷贝列表中的任何部分（顶层或嵌套层），都**永远不会**影响原对象。
 * `copy` 模块需要先导入：`import copy`。
-
-<!--v-->
-
-## 深拷贝 (Shallow Copy) 示例
-
 ```python
 import copy
 a = [2, 3]
 L = [1, a]  
 L_deep = copy.deepcopy(L)
 print("Initial state:")
-print("L:", L)             # 输出 [1, [2, 3]]
+print("L:", L)           # 输出 [1, [2, 3]]
 print("L_deep:", L_deep) # 输出 [1, [2, 3]]
 print("\nChange a[0] = 88:")
 a[0] = 88
-print("L:", L)             # 输出 [1, [88, 3]], L 中的 a 被修改了
+print("L:", L)           # 输出 [1, [88, 3]], L 中的 a 被修改了
 print("L_deep:", L_deep) # 输出 [1, [2, 3]], L_deep 中的 a 没有变！
 ```
 
