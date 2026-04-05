@@ -1,0 +1,366 @@
+---
+title: SI100B_Spring_2026_Recitation_4
+separator: <!--s-->
+verticalSeparator: <!--v-->
+theme: simple
+highlightTheme: github
+css: assets/custom.css
+autoTitlePage: true
+makeTitle:
+  lecture: SI100B Spring 2026 Recitation 4
+  title: 元组、列表：可变性与克隆
+  detail: SI100B 2026 Staff | 2026-04-05
+makeThanks: true
+---
+
+# 说在前面
+
+<!--v-->
+
+## 说在前面
+
+- 本次习题课将介绍Python中非常重要的两种复合数据类型：**元组 (Tuples)** 和 **列表 (Lists)**。
+- 理解它们的最大区别——**可变性 (Mutability)**，是避免许多常见Bug的关键。
+- 我们还将深入探讨在内存中，变量与对象的关系，以及**别名 (Aliasing)** 与 **克隆 (Cloning)** 的区别。
+- 如果在做题时遇到奇怪的列表行为，多半是因为修改了正在遍历的列表或混淆了别名与克隆，请大家务必弄清这些概念！
+
+<!--s-->
+
+# 本次习题课内容
+
+<!--v-->
+
+## Topics
+
+- 复合数据类型简介
+- 元组 (Tuples)：定义、操作与解包
+- 列表 (Lists)：定义、操作与遍历
+- 可变性与副作用 (Mutability and Side Effects)
+- 迭代时的修改黑洞 (Mutating While Iterating)
+- 别名与克隆 (Aliasing vs. Cloning)
+- 浅拷贝与深拷贝 (Shallow vs. Deep Copying)
+
+<!--s-->
+
+# 一、复合数据类型
+
+<!--v-->
+
+## 1. 什么是复合数据类型？
+
+在此之前，我们接触的大多是**标量类型 (Scalar types)**，如 `int`，`float`，和 `bool`。
+唯一的例外是 `string`，它由一系列字符组成。
+
+现在，我们要认识更通用的复合数据类型——**包含多个元素的有序序列**。这些元素本身也可以是复合结构！
+
+* **元组 (Tuples)：** 不可变的序列。
+* **列表 (Lists)：** 可变的序列。
+
+<!--s-->
+
+# 二、元组 (Tuples)
+
+<!--v-->
+
+## 1. 定义与语法
+
+**元组** 是不可变的、有序的元素序列。它的值一旦创建便不能改变。
+
+* **空元组：** `tuple_empty = ()`
+* **单元素元组：** `tuple_short = (2,)` （逗号是必须的，否则会被视为带括号的整数）
+* **多元素元组：** `hello_tuple = (2, "stu", 3)`
+```python
+# 示例不可改变
+hello_tuple = (2, "stu", 3)
+hello_tuple[1] = 4 # TypeError: 'tuple' object does not support item assignment
+```
+
+<!--v-->
+
+## 2. 常见操作
+
+元组支持字符串中大部分的序列操作：
+
+* **索引：** 从0开始。 `hello_tuple[0]` 结果为 `2`。
+* **切片：** `hello_tuple[1:3]` 结果为 `("stu", 3)`。
+* **拼接：** `(2, "stu", 3) + (5, 6)` 结果为 `(2, "stu", 3, 5, 6)`。
+* **重复：** `(1, 2) * 2` 结果为 `(1, 2, 1, 2)`。
+* **内置函数：** `len()`, `min()`, `max()`, `sum()` 等。
+
+🚨 **注意：** 尝试修改元组元素（如 `hello_tuple[1] = 4`）会引发 `TypeError`！
+
+<!--v-->
+
+## 3. 嵌套与遍历
+
+- **嵌套元组：** 元组的元素也可以是元组。
+  ```python
+  seq = (2, "a", 4, (1, 2))
+  print(seq[3][0]) # 结果为 1
+  ```
+- **遍历元组：** 可以直接使用 `for` 循环。
+  ```python
+  for e in seq:
+      print(e)
+  ```
+
+<!--v-->
+
+## 4. 解包与多值返回
+
+元组非常适合用于**变量交换**和**多返回值**函数。
+
+- **变量交换：** 
+  `(x, y) = (y, x)` （无需额外借助 `temp` 变量）
+
+- **返回多个值：**
+  ```python
+  def quotient_and_remainder(x, y):
+      return (x // y, x % y)
+
+  (quot, rem) = quotient_and_remainder(5, 2)
+  ```
+
+*注：在Python中，真正创建元组的是逗号 `,`，而不是括号 `()`（空元组除外）。*
+
+<!--s-->
+
+# 三、列表 (Lists)
+
+<!--v-->
+
+## 1. 定义与修改
+
+**列表** 是用方括号 `[]` 表示的有序元素序列。
+* 列表通常是同构的（所有元素类型相同），但也可包含混合类型。
+* **最重要的一点：列表是可变的 (Mutable)。** 你可以直接修改特定元素的值。
+
+```python
+hello_list = [1, 2, 3]
+hello_list[0] = 5  # 现在变成了 [5, 2, 3]
+```
+
+<!--v-->
+
+## 2. 列表与字符串的相互转换
+
+* **字符串转列表：**
+  * 逐字符拆分：`list("abc")` 得到 `['a', 'b', 'c']`
+  * 按分隔符拆分：`"I <3 cs".split(' ')` 得到 `['I', '<3', 'cs']`
+* **列表转字符串：**
+  * 使用 `join` 方法：`'-'.join(['a', 'b', 'c'])` 得到 `"a-b-c"`
+
+<!--s-->
+
+# 四、可变性与"Side Effects"(副作用?)
+
+<!--v-->
+
+## 1. 什么是"Side Effects"
+
+一些方法会直接修改列表本身，而不会返回一个新列表，而是返回 `None`。我们称其为利用**Side Effects**。
+
+* **`L.append(x)`**：在末尾添加一个元素。
+* **`L.sort()`** 与 **`sorted(L)`**：
+  * `L.sort()` 直接将 `L` 原地排序，返回 `None`。
+  * `sorted(L)` 不改变原来的 `L`，而是返回一个新的、排好序的列表。
+* **`L.reverse()`**：原地倒序，返回 `None`。
+
+<!--s-->
+
+# 五、迭代时的修改黑洞 
+
+<!--v-->
+
+## 1. 危险的操作：边迭代边修改
+
+一个非常常见的错误是：在使用 `for` 循环遍历列表时，同时对其进行 `remove` 或 `append`。
+
+### 思考题：移除所有指定的元素
+尝试写一个函数 `remove_all(L, e)` 移除列表中所有的 `e`：
+
+```python
+# 错误做法！
+def remove_all(L, e):
+    for elem in L:
+        if elem == e:
+            L.remove(e)
+
+L = [1, 2, 2, 2]
+remove_all(L, 2)
+print(L) # 结果竟是 [1, 2]！
+```
+
+<!--v-->
+
+## 2. 为什么会失败？
+
+- Python使用内部计数器跟踪循环的索引。
+- 当你移除一个元素时，剩余元素会向左移动填补空缺。
+- 但Python**不会**把内部计数器退回一步。
+- 结果就是，循环会“跳过”被移到刚刚空缺位置的那个元素！
+
+*正确的做法是使用 `while` 循环，或者遍历列表的副本（比如 `for elem in L[:]`）。*
+```python
+def remove_all(L, e):
+    while e in L:
+        L.remove(e)
+# 或者
+def remove_all(L, e):
+    for elem in L[:]:  # 遍历副本
+        if elem == e:
+            L.remove(e)
+```
+
+<!--v-->
+
+## 3. 边迭代边修改的陷阱举例
+
+**无限循环：**
+```python
+L = [1, 2, 3, 4]
+for e in L:
+    L.append(0) 
+```
+由于循环直接跟随着列表元素的增加，它永远也达不到终点，造成死循环！
+
+<!--s-->
+
+# 六、别名与克隆
+
+<!--v-->
+
+## 1. 内存中的对象
+
+在Python中，修改操作是原地发生的，而赋值可能会创建新对象。
+使用 `id(L)` 可以查看对象在内存中的地址。
+* `L.append(8)`：`L` 的内存地址不变（可变性）。
+* `L = L + [8]`：`L` 指向了一个**全新**的对象。
+```python
+L = [1, 2, 3]
+print(id(L))  # 假设输出 140123456789000
+L.append(8)
+print(id(L))  # 仍然输出 140123456789000
+L = L + [8]
+print(id(L))  # 输出一个新的地址，如 140123456789500
+```
+
+<!--v-->
+
+## 2. 别名 (Aliasing)
+
+当你使用 `=` 号将一个可变对象（如列表）赋给另一个变量时，你创建的是一个**别名**，而不是副本。
+
+```python
+L1 = [10, 20, 30]
+L1_copy = L1
+L1_copy[0] = 99
+print("L1:", L1)  # 输出: L1: [99, 20, 30]， L1 也被修改了！
+print("L1_copy:", L1_copy)  # 输出: L1_copy: [99, 20, 30]
+```
+它们指向内存中的**同一个对象**。修改其中一个，另一个也会变。
+
+*注：函数的列表参数也是别名，在函数内部修改列表，外部的列表也会改变！*
+
+<!--v-->
+
+## 3. 有趣的进阶示例：列表的列表
+
+```python
+a = [1] * 10
+b = [a for _ in range(10)] # b 中的每个元素都相当于a的一个别名，指向同一个列表对象 `a`。
+print("id(a)   :", id(a))     # 假设输出 140123456789000
+print("id(b[0]):", id(b[0]))  # 输出 140123456789000，b[0] 与 a 是同一个对象
+print("id(b[1]):", id(b[1]))  # 输出 140123456789000，b[1] 与 a 也是同一个对象
+
+print('Before modification a[0]:')
+for sublist in b:
+    print(sublist)  # 每个子列表都是 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+print('\nAfter modification a[0]:')
+a[0] = 0 # 这将修改a的第一个元素。
+for sublist in b:
+    print(sublist)  # 每个子列表现在都是 [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+```
+这是一个常见的坑：用同一个列表对象生成多层嵌套，一改全改。
+
+<!--v-->
+
+## 4. 克隆 (Cloning)
+
+为了创建一个独立的列表对象，你需要显式地**克隆**它：
+
+* 使用切片：`L1_copy = L1[:]`
+* 现在 `L1` 和 `L1_copy` 在顶层（Top-level）指向不同的对象，修改 `L1_copy` 不会影响 `L1`。
+```python
+Loriginal = [4, 5, 6]
+Lnew = Loriginal[:]
+print(id(Loriginal))  # 假设输出 140123456789000
+print(id(Lnew))       # 输出一个新的地址，如 140123456789500
+```
+<!--s-->
+
+# 七、浅拷贝与深拷贝
+
+<!--v-->
+
+## 1. 浅拷贝 (Shallow Copy)
+
+用 `L[:]` 或 `copy.copy(L)` 创建的都是**浅拷贝**。
+* 它会创建一个新的顶层结构。
+* 但是，列表里面包含的可变对象（如嵌套列表）仍然是共享的（别名）。
+
+```python
+a = [2, 3]
+L = [1, a]
+L_shallow = L[:]
+print("Initial state:")
+print("L:", L)             # 输出 [1, [2, 3]]
+print("L_shallow:", L_shallow) # 输出 [1, [2, 3]]
+print("\nChange L[0] = 99:")
+L[0] = 99
+print("L:", L)             # 输出 [99, [2, 3]]
+print("L_shallow:", L_shallow) # 输出 [1, [2, 3]], L_shallow[0] 没有变
+print("\nChange a[0] = 88:")
+a[0] = 88
+print("L:", L)             # 输出 [99, [88, 3]], L 中的 a 被修改了
+print("L_shallow:", L_shallow) # 输出 [1, [88, 3]], L_shallow 中的 a 也被修改了！
+```
+
+<!--v-->
+
+## 2. 深拷贝 (Deep Copy)
+
+为了完全隔离两个对象，需要使用 `copy.deepcopy(L)`。
+* 它会在**所有层级**上递归地克隆数据结构。
+* 修改深拷贝列表中的任何部分（顶层或嵌套层），都**永远不会**影响原对象。
+* `copy` 模块需要先导入：`import copy`。
+```python
+import copy
+a = [2, 3]
+L = [1, a]  
+L_deep = copy.deepcopy(L)
+print("Initial state:")
+print("L:", L)             # 输出 [1, [2, 3]]
+print("L_deep:", L_deep) # 输出 [1, [2, 3]]
+print("\nChange a[0] = 88:")
+a[0] = 88
+print("L:", L)             # 输出 [1, [88, 3]], L 中的 a 被修改了
+print("L_deep:", L_deep) # 输出 [1, [2, 3]], L_deep 中的 a 没有变！
+```
+
+<!--s-->
+
+# 总结
+
+<!--v-->
+
+## 总结
+
+- **元组 (Tuples)** 安全（不可变），适合固定数据；
+- **列表 (Lists)** 灵活（可变），但在操作时需谨防副作用；
+- **边迭代边修改**是万恶之源，请不要这么做！
+- 搞清楚 **别名 (`=`)**, **浅拷贝 (`[:]`)**, 和 **深拷贝 (`deepcopy`)** 之间的区别。
+
+## Q&A 环节
+有任何问题欢迎提问！
