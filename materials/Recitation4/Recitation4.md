@@ -148,14 +148,14 @@ hello_list[0] = 5  # 现在变成了 [5, 2, 3]
   * 使用 `join` 方法：`'-'.join(['a', 'b', 'c'])` 得到 `"a-b-c"`
 ```python
 s = "I <3 cs"
-L = s.split(' ')                       # 以' '作为分隔符
-print(L)                               # 输出: ['I', '<3', 'cs']
+L = s.split(' ')       # 以' '作为分隔符
+print(L)               # 输出: ['I', '<3', 'cs']
 
 L_chars = list("abc")
-print(L_chars)                         # 输出: ['a', 'b', 'c']
+print(L_chars)         # 输出: ['a', 'b', 'c']
 
 joined_str = '-'.join(['a', 'b', 'c']) # 以'-'作为连接符
-print(joined_str)                      # 输出: a-b-c
+print(joined_str)      # 输出: a-b-c
 ```
 <!--v-->
 
