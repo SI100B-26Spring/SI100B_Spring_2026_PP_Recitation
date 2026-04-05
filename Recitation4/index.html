@@ -331,30 +331,7 @@ print("L1_copy:", L1_copy)  # 输出: L1_copy: [99, 20, 30]
 
 <!--v-->
 
-## 3. 有趣的进阶示例：列表的列表
-
-```python
-a = [1] * 10
-b = [a for _ in range(10)] 
-# b 中的每个元素都相当于a的一个别名，指向同一个列表对象 `a`。
-print("id(a)   :", id(a))     # 假设输出 140123456789
-print("id(b[0]):", id(b[0]))  # 输出 140123456789，b[0] 与 a 是同一个对象
-print("id(b[1]):", id(b[1]))  # 输出 140123456789，b[1] 与 a 也是同一个对象
-
-print('Before modification a[0]:')
-for sublist in b:
-    print(sublist)  # 每个子列表都是 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-
-print('\nAfter modification a[0]:')
-a[0] = 0            # 这将修改a的第一个元素。
-for sublist in b:
-    print(sublist)  # 每个子列表现在都是 [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-```
-这是一个常见的坑：用同一个列表对象生成多层嵌套，一改全改。
-
-<!--v-->
-
-## 4. 克隆 (Cloning)
+## 3. 克隆 (Cloning)
 
 为了创建一个独立的列表对象，你需要显式地**克隆**它：
 
@@ -366,6 +343,31 @@ Lnew = Loriginal[:]
 print(id(Loriginal))  # 假设输出 140123456789000
 print(id(Lnew))       # 输出一个新的地址，如 140123456789500
 ```
+
+<!--v-->
+
+## 4. 有趣的进阶示例：列表的列表
+
+```python
+a = [1] * 10
+b = [a for _ in range(10)] 
+# b 中的每个元素都是 a 的别名，指向同一个列表对象。
+
+print("id(a)   :", id(a))    # 假设输出 140123456789
+print("id(b[0]):", id(b[0])) # 相同地址，b[0] 和 a 是同一对象
+print("id(b[1]):", id(b[1])) # 相同地址，b[1] 和 a 也是同一对象
+
+print('\nBefore modification a[0]:')
+for sublist in b:
+    print(sublist)         # 输出: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+print('\nAfter modification a[0]:')
+a[0] = 0                   # 修改 a 造成“牵一发而动全身”
+for sublist in b:
+    print(sublist)         # 输出: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+```
+这是一个常见的坑：用同一个列表对象生成多层嵌套，一改全改。
+
 <!--s-->
 
 <div class="middle center"><div style="width: 100%">
@@ -388,18 +390,20 @@ print(id(Lnew))       # 输出一个新的地址，如 140123456789500
 a = [2, 3]
 L = [1, a]
 L_shallow = L[:]
+
 print("Initial state:")
-print("L:", L) # 输出 [1, [2, 3]]
-print("L_shallow:", L_shallow) # 输出 [1, [2, 3]]
+print("L:        ", L)         # 输出: [1, [2, 3]]
+print("L_shallow:", L_shallow) # 输出: [1, [2, 3]]
+
 print("\nChange L[0] = 99:")
 L[0] = 99
-print("L:", L) # 输出 [99, [2, 3]]
-print("L_shallow:", L_shallow) # 输出 [1, [2, 3]], L_shallow[0] 没有变
+print("L:        ", L)         # 输出: [99, [2, 3]]
+print("L_shallow:", L_shallow) # 互不影响: [1, [2, 3]]
+
 print("\nChange a[0] = 88:")
 a[0] = 88
-print("L:", L) # 输出 [99, [88, 3]], L 中的 a 被修改了
-print("L_shallow:", L_shallow) 
-# 输出 [1, [88, 3]], L_shallow 中的 a 也被修改了！
+print("L:        ", L)         # 输出: [99, [88, 3]]
+print("L_shallow:", L_shallow) # 同步改变: [1, [88, 3]]
 ```
 
 <!--v-->
@@ -415,13 +419,15 @@ import copy
 a = [2, 3]
 L = [1, a]  
 L_deep = copy.deepcopy(L)
+
 print("Initial state:")
-print("L:", L)           # 输出 [1, [2, 3]]
-print("L_deep:", L_deep) # 输出 [1, [2, 3]]
+print("L:     ", L)      # 输出: [1, [2, 3]]
+print("L_deep:", L_deep) # 输出: [1, [2, 3]]
+
 print("\nChange a[0] = 88:")
 a[0] = 88
-print("L:", L)           # 输出 [1, [88, 3]], L 中的 a 被修改了
-print("L_deep:", L_deep) # 输出 [1, [2, 3]], L_deep 中的 a 没有变！
+print("L:     ", L)      # 输出: [1, [88, 3]]
+print("L_deep:", L_deep) # 完全隔离: [1, [2, 3]]
 ```
 
 <!--s-->
