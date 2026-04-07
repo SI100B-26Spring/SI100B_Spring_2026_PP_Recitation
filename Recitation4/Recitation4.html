@@ -151,6 +151,16 @@ hello_tuple[1] = 4
   (quot, rem) = quotient_and_remainder(5, 2)
   ```
 
+- **可变参数 *args**
+  ```python
+  def mean(*args):
+      tot = 0
+      for a in args:
+          tot += a
+      return tot / len(args) if len(args) > 0 else 0
+
+  print("计算平均值:", mean(1, 2, 3, 4, 5, 6))
+  ```
 *注：在Python中，真正创建元组的是逗号 `,`，而不是括号 `()`（空元组除外）。*
 
 <!--s-->
@@ -428,6 +438,66 @@ print("\nChange a[0] = 88:")
 a[0] = 88
 print("L:     ", L)      # 输出: [1, [88, 3]]
 print("L_deep:", L_deep) # 完全隔离: [1, [2, 3]]
+```
+
+<!--s-->
+
+<div class="middle center"><div style="width: 100%">
+
+# 七、作业补充：Matplotlib 画图入门
+
+</div></div>
+
+<!--v-->
+
+## 为什么要用 Matplotlib？
+
+在即将到来的 PS2 中，你们需要比较不同排序算法的运行时间（Performance Comparison），并把结果画在一张图里。
+`matplotlib.pyplot` 是 Python 中最常用的绘图库之一。
+
+**安装 (如果本地还没有的话)：**
+```bash
+pip install matplotlib
+```
+
+<!--v-->
+
+## 1. 绘制基本折线图
+
+假设我们测量了算法在不同问题规模 `n` 下的时间，存成了列表：
+
+```python
+import matplotlib.pyplot as plt
+
+# 假设这些是我们收集到的数据
+sizes = [1, 2, 4, 8, 16]         # 横坐标 (通常是数据规模 n)
+times = [0.1, 0.4, 1.2, 3.5, 9.1] # 纵坐标 (通常是运行时间)
+
+plt.plot(sizes, times) # 传入 x 和 y 坐标的列表
+plt.show()             # 显示图表
+```
+
+<!--v-->
+
+## 2. 在同一张图上画多条线并添加图例
+
+如果你有多种算法进行比较，只需要多次调用 `plt.plot()`。为了区分它们，可以传入 `label` 参数，最后调用 `plt.legend()`。
+
+```python
+import matplotlib.pyplot as plt
+
+sizes = [10, 100, 1000]
+time_algo_A = [0.1, 1.2, 10.5]
+time_algo_B = [0.2, 0.8, 2.1]
+
+plt.plot(sizes, time_algo_A, label='Algorithm A')
+plt.plot(sizes, time_algo_B, label='Algorithm B')
+
+plt.xlabel('Data Size (n)') # 横坐标标签
+plt.ylabel('Time (s)')      # 纵坐标标签
+plt.title('Performance Comparison') # 图表标题
+plt.legend()                # 显示图例 (根据 label)
+plt.show()
 ```
 
 <!--s-->
