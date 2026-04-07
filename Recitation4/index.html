@@ -48,6 +48,7 @@
 - 理解它们的最大区别——**可变性 (Mutability)** ，是避免许多常见Bug的关键。
 - 我们还将深入探讨在内存中，变量与对象的关系，以及 **别名 (Aliasing)** 与 **克隆 (Cloning)** 的区别。
 - 如果在做题时遇到奇怪的列表行为，多半是因为修改了正在遍历的列表或混淆了别名与克隆，请大家务必弄清这些概念！
+- 此外，我们还会补充介绍 **Matplotlib** 画图入门，这是完成本次作业（PS2）所必须掌握的工具。
 
 <!--v-->
 
@@ -57,9 +58,10 @@
 - 元组 (Tuples)：定义、操作与解包
 - 列表 (Lists)：定义、操作与遍历
 - 可变性与副作用 (Mutability and Side Effects)
-- 迭代时的修改黑洞 (Mutating While Iterating)
+- 迭代时的修改隐患 (Mutating While Iterating)
 - 别名与克隆 (Aliasing vs. Cloning)
 - 浅拷贝与深拷贝 (Shallow vs. Deep Copying)
+- 作业补充：Matplotlib 画图入门
 
 <!--s-->
 
@@ -98,6 +100,7 @@
 * **空元组：** `tuple_empty = ()`
 * **单元素元组：** `tuple_short = (2,)` （逗号是必须的，否则会被视为带括号的整数）
 * **多元素元组：** `hello_tuple = (2, "stu", 3)`
+*注：在Python中，真正创建元组的是逗号 `,`，而不是括号 `()`（空元组除外）。*
 
 <!--v-->
 
@@ -159,7 +162,6 @@ hello_tuple[1] = 4
       return tot / len(args) if len(args) > 0 else 0
   print("计算平均值:", mean(1, 2, 3, 4, 5, 6))
   ```
-*注：在Python中，真正创建元组的是逗号 `,`，而不是括号 `()`（空元组除外）。*
 
 <!--s-->
 
@@ -370,9 +372,9 @@ for sublist in b:
     print(sublist)         # 输出: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 print('\nAfter modification a[0]:')
-a[0] = 0                   # 修改 a 造成“牵一发而动全身”
+a[0] = 0           # 修改 a 造成“牵一发而动全身”
 for sublist in b:
-    print(sublist)         # 输出: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    print(sublist) # 输出: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ```
 这是一个常见的坑：用同一个列表对象生成多层嵌套，一改全改。
 
@@ -468,7 +470,7 @@ pip install matplotlib
 import matplotlib.pyplot as plt
 
 # 假设这些是我们收集到的数据
-sizes = [1, 2, 4, 8, 16]         # 横坐标 (通常是数据规模 n)
+sizes = [1, 2, 4, 8, 16]          # 横坐标 (通常是数据规模 n)
 times = [0.1, 0.4, 1.2, 3.5, 9.1] # 纵坐标 (通常是运行时间)
 
 plt.plot(sizes, times) # 传入 x 和 y 坐标的列表
@@ -492,9 +494,9 @@ plt.plot(sizes, time_algo_A, label='Algorithm A')
 plt.plot(sizes, time_algo_B, label='Algorithm B')
 
 plt.xlabel('Data Size (n)') # 横坐标标签
-plt.ylabel('Time (s)')      # 纵坐标标签
+plt.ylabel('Time (s)') # 纵坐标标签
 plt.title('Performance Comparison') # 图表标题
-plt.legend()                # 显示图例 (根据 label)
+plt.legend() # 显示图例 (根据 label)
 plt.show()
 ```
 
