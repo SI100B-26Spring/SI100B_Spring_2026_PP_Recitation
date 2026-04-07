@@ -114,18 +114,16 @@ hello_tuple[1] = 4
   ```python
   def quotient_and_remainder(x, y):
       return (x // y, x % y)
-
   (quot, rem) = quotient_and_remainder(5, 2)
   ```
 
-- **可变参数 *args**
+- **可变参数 `*args`**
   ```python
   def mean(*args):
       tot = 0
       for a in args:
           tot += a
       return tot / len(args) if len(args) > 0 else 0
-
   print("计算平均值:", mean(1, 2, 3, 4, 5, 6))
   ```
 *注：在Python中，真正创建元组的是逗号 `,`，而不是括号 `()`（空元组除外）。*
@@ -193,7 +191,7 @@ print("使用 sort 后的列表:", L)
 
 <!--s-->
 
-# 四、迭代时的修改黑洞 
+# 四、迭代时的修改隐患
 
 <!--v-->
 
@@ -399,7 +397,7 @@ print("L_deep:", L_deep) # 完全隔离: [1, [2, 3]]
 
 ## 为什么要用 Matplotlib？
 
-在即将到来的 PS2 中，你们需要比较不同排序算法的运行时间（Performance Comparison），并把结果画在一张图里。
+在 PS2 中，你们需要比较不同排序算法的运行时间（Performance Comparison），并把结果画在一张图里。
 `matplotlib.pyplot` 是 Python 中最常用的绘图库之一。
 
 **安装 (如果本地还没有的话)：**
