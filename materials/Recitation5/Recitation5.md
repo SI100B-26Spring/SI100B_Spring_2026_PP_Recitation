@@ -1,5 +1,5 @@
 ---
-title: SI100B_Spring_2026_Recitation_Review_5_6_Revised
+title: SI100B_Spring_2026_Recitation_5
 separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
@@ -7,13 +7,11 @@ highlightTheme: github
 css: assets/custom.css
 autoTitlePage: true
 makeTitle:
-  lecture: SI100B Spring 2026 Review Recitation
-  title: Lecture 11–12 复习课：推导式、函数、测试、异常与字典
+  lecture: SI100B Spring 2026 Recitation 5
+  title: 推导式、函数、测试、异常与字典
   detail: SI100B 2026 Staff | 2026-04-10
 makeThanks: true
 ---
-
-<!--s-->
 
 # 本次复习课内容
 
@@ -1540,8 +1538,3 @@ def count_words(text):
 ## Q&A 环节
 
 有任何问题欢迎提问。
-也建议大家在复习时主动比较：
-
-- 哪些题是在考语法；
-- 哪些题实际上是在考设计判断；
-- 哪些题虽然形式不同，但底层模式完全相同。
