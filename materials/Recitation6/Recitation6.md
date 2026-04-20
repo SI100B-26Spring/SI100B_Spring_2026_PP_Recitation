@@ -8,7 +8,7 @@ css: assets/custom.css
 autoTitlePage: true
 makeTitle:
   lecture: SI100B Spring 2026 Recitation 6
-  title: IDE使用及课程回顾
+  title: IDE使用、OOP、课程回顾
   detail: SI100B 2026 Staff | 2026-04-19
 makeThanks: false
 ---
@@ -30,6 +30,7 @@ break
 
 - 考试的形式为机考，需要使用机房电脑上提供的编程环境
 - 简单介绍一下怎么使用VSCode或者PyCharm编写及运行Python程序
+- 回顾一下前两节课的内容：OOP、类与继承
 - 帮大家回顾一遍课上学过的知识点
 
 <!--s-->
@@ -76,7 +77,7 @@ break
 
 ## 运行代码
 
-- 当你的代码有编译时错误（compile-time error）时，VSCode会直接察觉，并体现在Problems中
+- 当你的代码有语法上的错误时，VSCode会直接察觉，并体现在Problems中
 
 <img src="images/PixPin_2026-04-19_20-17-09.png" width="70%" style="float: middle;">
 <!-- PixPin_2026-04-19_20-17-09.png -->
@@ -85,7 +86,7 @@ break
 
 ## 运行代码
 
-- 当你的代码在运行时报错（runtime error），terminal中会提供报错信息
+- 当你的代码在运行时报错，terminal中会提供报错信息
 
 <img src="images/PixPin_2026-04-19_20-16-45.png" width="70%" style="float: middle;">
 <!-- PixPin_2026-04-19_20-16-45.png -->
@@ -128,6 +129,70 @@ py_new_project_conda_dark.png -->
 
 <!--s-->
 
+# 面向对象编程（Object Oriented Programming, OOP）
+
+<!--v-->
+
+## 面向对象编程（OOP）
+
+- Python中的每一个东西都是一个对象（Object）
+  - 每一个标量：整数、浮点数...
+  - 每一个复合数据类型的数据：`list`、`dict`...
+  - 每一个函数
+  - 每一个变量
+  ...
+- 对象可以被创建、被修改、被删除
+- **我们甚至可以定义自己的Python对象**
+
+<!--v-->
+
+## 面向对象编程（OOP）
+
+- **类**（Class）：用来描述具有相同的属性和方法的对象的集合
+- 它定义了一种Python对象
+- 每一个这种对象称为这个类的**实例**（Instance）
+
+```python
+class Dog(): # 类的定义
+  def __init__(self, name, age):
+    self.name = name 
+    self.age = age
+
+adog = Dog("Bob", 8) # adog是一个实例
+```
+
+<!--v-->
+
+## 关于`__init__()`方法
+
+- 每当一个类的实例被创建，都会调用一次`__init__()`方法
+- 第一个参数一定是**实例本身**
+  - 一般使用self作为参数名
+
+<!--v-->
+
+## Dunder functions
+
+- 有时候，我们会希望自己定义的类实例能够使用Python自带的运算符（如`+`, `*`, `=`等等）
+ - 很简单，只需要实现对应的方法即可
+<img src="images/Screenshot 2026-04-20 194714.png" width="65%" style="float: middle;">
+
+<!--v-->
+
+## 继承（Inheritance）
+
+- 一个类可以是另外一个类的子集
+
+```python
+class Chihuahua(Dog):
+  def __init__(self, name, age):
+    # other attributes
+
+bdog = Chihuahua("Carol", 7) # bdog也是类Dog的实例，可以使用Dog的属性
+```
+
+<!--s-->
+
 # 课程内容回顾
 
 <!--v-->
@@ -143,6 +208,7 @@ py_new_project_conda_dark.png -->
   - 栈（Stack），以及递归
 - 排序算法
 - 异常（Exception）
+- 面向对象编程
 
 <!--s-->
 
@@ -322,7 +388,7 @@ def increment():
 
 ## 函数是对象
 
-- 函数也是Python**对象**（Object）
+- 函数也是Python**对象**
   - 函数可以被赋值给变量
   - 可以作为参数
   - 可以作为返回值
