@@ -8,7 +8,7 @@ css: assets/custom.css
 autoTitlePage: true
 makeTitle:
   lecture: SI100B Spring 2026 Recitation 6
-  title: Placeholder
+  title: IDE使用及课程回顾
   detail: SI100B 2026 Staff | 2026-04-19
 makeThanks: false
 ---
